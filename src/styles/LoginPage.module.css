@@ -1,0 +1,15 @@
+.login_wrapper {
+  width: 100vw !important;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background-color: #f5f5f5;
+}
+
+.login_paper {
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}

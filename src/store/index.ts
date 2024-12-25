@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 
@@ -8,7 +9,7 @@ const loadState = () => {
 
 const saveState = (state: any) => {
     localStorage.setItem('reduxState', JSON.stringify(state));
-}
+};
 
 export const store = configureStore({
     reducer: {

@@ -1,64 +1,96 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/userSlice';
-import { Button, TextField, Container, Typography, Box, Paper } from '@mui/material';
+import { Button, TextField, Container, Typography, Box, Paper, Alert } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import styles from "../styles/LoginPage.module.css";
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const [loginError, setLoginError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-    const handleLogin = () => {
-        dispatch(login({ username, password }));
-    };
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            username: Yup.string().required('Username is required'),
+            password: Yup.string().required('Password is required'),
+        }),
+        onSubmit: (values) => {
+            const { username, password } = values;
+            if (username === "user123" && password === "password123") {
+                setLoginError(null);
+                dispatch(login({ username, password }));
+                navigate("/onboarding");
+            } else {
+                setLoginError("Invalid username or password. Please try again.");
+            }
+        },
+    });
 
     return (
-        <Container maxWidth="xs" style={{ marginTop: '5rem' }}>
-            <Paper elevation={4} style={{ padding: '2rem', borderRadius: '10px' }}>
-                <Box textAlign="center" marginBottom="1rem">
-                    <Typography variant="h4" component="h1" color="primary">
-                        Welcome Back
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        Please login to your account
-                    </Typography>
-                </Box>
-                <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-                    <TextField
-                        label="Username"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        label="Password"
-                        type="password"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        size="large"
-                        style={{ marginTop: '1rem' }}
-                    >
-                        Login
-                    </Button>
-                </form>
-                <Box textAlign="center" marginTop="1.5rem">
-                    <Typography variant="body2" color="textSecondary">
-                        Don't have an account? <a href="#" style={{ color: '#3f51b5', textDecoration: 'none' }}>Sign Up</a>
-                    </Typography>
-                </Box>
-            </Paper>
-        </Container>
+        <div className={styles.login_wrapper}>
+            <Container maxWidth="xs">
+                <Paper elevation={4} className={styles.login_paper}>
+                    <Box textAlign="center" marginBottom="1rem">
+                        <Typography variant="h4" component="h1" color="primary">
+                            Welcome Back
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            Please login to your account
+                        </Typography>
+                    </Box>
+                    <form onSubmit={formik.handleSubmit}>
+                        <TextField
+                            label="Username"
+                            name="username"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formik.values.username}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.username && Boolean(formik.errors.username)}
+                            helperText={formik.touched.username && formik.errors.username}
+                        />
+                        <TextField
+                            label="Password"
+                            name="password"
+                            type="password"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            size="large"
+                            style={{ marginTop: '1rem' }}
+                        >
+                            Login
+                        </Button>
+                        {loginError && (
+                            <Box marginTop="1rem">
+                                <Alert severity="error">{loginError}</Alert>
+                            </Box>
+                        )}
+                    </form>
+                </Paper>
+            </Container>
+        </div>
     );
 };
 
