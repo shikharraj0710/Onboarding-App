@@ -1,5 +1,6 @@
 import React from 'react';
-import { Stepper, Step, StepLabel, Box, Container, Paper } from '@mui/material';
+import { Stepper, Step, StepLabel, Box, Container, Paper, Typography } from '@mui/material';
+import styles from "../styles/StepsLayout.module.css"
 
 interface StepsLayoutProps {
     steps: string[];
@@ -9,61 +10,55 @@ interface StepsLayoutProps {
 
 const StepsLayout: React.FC<StepsLayoutProps> = ({ steps, activeStep, children }) => {
     return (
-        <Container maxWidth="md">
-            <Box
-                sx={{
-                    marginTop: 4,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+        <div className={styles.wrapper}>
+            <Container
             >
-                <Stepper
-                    activeStep={activeStep}
-                    alternativeLabel
-                    sx={{
-                        width: '100%',
-                        marginBottom: 4,
-                        '.MuiStepConnector-line': {
-                            borderColor: '#1976d2',
-                        },
-                        '.MuiStepLabel-label.Mui-active': {
-                            color: '#1976d2',
-                        },
-                    }}
+                <Box
+                    className={styles.box}
                 >
-                    {steps.map((label, index) => (
-                        <Step key={`${label}_${index}`}>
-                            <StepLabel
-                                sx={{
-                                    '.MuiStepIcon-root.Mui-active': {
-                                        color: '#1976d2',
-                                    },
-                                    '.MuiStepIcon-root.Mui-completed': {
-                                        color: '#4caf50',
-                                    },
-                                }}
-                            >
-                                {label}
-                            </StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-                <Paper
-                    elevation={3}
-                    sx={{
-                        padding: 4,
-                        width: '100%',
-                        borderRadius: '8px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    {children}
-                </Paper>
-            </Box>
-        </Container>
+                    <Typography
+                        variant="h3"
+                        component="div"
+                        gutterBottom
+                        className={styles.typography}
+                    >
+                        Onboarding Process
+                    </Typography>
+                    <Stepper
+                        activeStep={activeStep}
+                        alternativeLabel
+                        className={styles.stepperContainer}
+                    >
+                        {steps.map((label, index) => (
+                            <Step key={`${label}_${index}`}>
+                                <StepLabel
+                                    sx={{
+                                        '.MuiStepIcon-root.Mui-active': {
+                                            color: '#1976d2',
+                                        },
+                                        '.MuiStepIcon-root.Mui-completed': {
+                                            color: '#4caf50',
+                                        },
+                                        '.MuiStepLabel-label': {
+                                            fontSize: '0.875rem',
+                                        },
+                                    }}
+                                >
+                                    {label}
+                                </StepLabel>
+                            </Step>
+                        ))}
+                    </Stepper>
+                    <Paper
+                        elevation={4}
+                        className={styles.paper}
+                    >
+                        {children}
+                    </Paper>
+                </Box>
+            </Container>
+        </div>
+
     );
 };
 

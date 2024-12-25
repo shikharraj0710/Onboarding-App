@@ -6,6 +6,7 @@
   align-items: center;
   margin: auto;
   background-color: #f5f5f5;
+  background: linear-gradient(to bottom, #4fc6e3, #c9e6ed);
 }
 
 .login_paper {

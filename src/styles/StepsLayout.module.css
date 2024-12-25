@@ -1,0 +1,39 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw !important;
+  background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepperContainer {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.typography {
+  text-align: center;
+  font-weight: 500;
+  color: #1976d2;
+  margin-block: 2rem;
+}
+
+.paper {
+  padding: 1rem;
+  width: 100%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent !important;	
+  box-shadow: none !important;
+  outline: 1px solid;
+}

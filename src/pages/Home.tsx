@@ -2,38 +2,30 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
+import styles from '../styles/Home.module.css';
 
 const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state: any) => state.user); 
+    const user = useSelector((state: any) => state.user);
 
     const handleLogout = () => {
-        dispatch(logout()); 
-        navigate('/'); 
+        dispatch(logout());
+        navigate('/');
     };
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                height: '100vh',
-                textAlign: 'center',
-                padding: 3,
-            }}
-        >
-            <Typography variant="h4" gutterBottom>Welcome, {user.credentials?.username}!</Typography>
-            <Typography variant="body1">
-                You have successfully completed the onboarding process.
-            </Typography>
-            <Button onClick={handleLogout} variant="contained" color="primary" sx={{ mt: 2 }}>
-                Logout
-            </Button>
-        </Box>
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>Welcome, {user.credentials?.username}!</h1>
+                <p className={styles.text}>
+                    You have successfully completed the onboarding process.
+                </p>
+                <button className={styles.button} onClick={handleLogout}>
+                    Logout
+                </button>
+            </div>
+        </div>
     );
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -59,18 +60,20 @@ const userSlice = createSlice({
         setFormData: (state, action: PayloadAction<Partial<UserState['formData']>>) => {
             const newFormData = { ...state.formData, ...action.payload };
 
+            const { cvv, ...filteredFormData } = newFormData;
+
             if (isFile(action.payload.profilePicture)) {
                 const file = action.payload.profilePicture as File;
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     newFormData.profilePicture = reader.result as string;
                     state.formData = newFormData;
-                    localStorage.setItem('onboardingFormData', JSON.stringify(newFormData)); 
+                    localStorage.setItem('onboardingFormData', JSON.stringify(filteredFormData)); 
                 };
                 reader.readAsDataURL(file);
             } else {
                 state.formData = newFormData;
-                localStorage.setItem('onboardingFormData', JSON.stringify(newFormData));
+                localStorage.setItem('onboardingFormData', JSON.stringify(filteredFormData));
             }
         },
         loadFormDataFromLocalStorage: (state) => {

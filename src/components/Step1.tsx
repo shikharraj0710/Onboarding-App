@@ -63,13 +63,11 @@ const Step1: React.FC<Step1Props> = ({ onNext, initialValues }) => {
     };
 
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" >
             <Box
                 sx={{
                     p: 4,
                     borderRadius: '8px',
-                    boxShadow: 3,
-                    bgcolor: 'background.paper',
                 }}
             >
                 <Typography variant="h5" gutterBottom textAlign="center">
